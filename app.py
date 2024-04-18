@@ -1,5 +1,3 @@
-# app.py
-
 from flask import Flask
 
 app = Flask(__name__)
@@ -13,4 +11,5 @@ def about():
     return 'This is a simple web application created with Flask.'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Start the Flask development server
+    app.run(host='0.0.0.0', debug=True)
