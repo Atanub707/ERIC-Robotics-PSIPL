@@ -36,7 +36,7 @@ jobs:
         with:
           contex: .
           push: true
-          tags: atanubiswas/webapp:v1
+          tags: atanubiswas/webapp:latest
 
   deploy:
     name: Deploy to EC2
@@ -56,8 +56,8 @@ jobs:
           script: |
             docker stop webapp || true
             docker rm webapp || true
-            docker pull atanubiswas/webapp:v1
-            docker run -d --name webapp -p 5000:5000 atanubiswas/webapp:v1
+            docker pull atanubiswas/webapp:latest
+            docker run -d --name webapp -p 5000:5000 atanubiswas/webapp:latest
             docker system prune -f
 
 
