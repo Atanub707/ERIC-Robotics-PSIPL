@@ -58,5 +58,7 @@ jobs:
             docker rm webapp || true
             docker pull atanubiswas/webapp:v1
             docker run -d --name webapp -p 5000:5000 atanubiswas/webapp:v1
+            docker system prune -f
+
 
      
