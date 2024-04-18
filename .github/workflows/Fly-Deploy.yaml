@@ -33,12 +33,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up Flyctl
-        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Configure SSH Key
+        run: echo "${{ secrets.AWS_EC2_SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Deploy to EC2
+        run: ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.AWS_HOST_IP }} "cd ERIC-Robotics-PSIPL && git pull origin main && pip install -r requirements.txt && python app.py"
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_KEY }}
