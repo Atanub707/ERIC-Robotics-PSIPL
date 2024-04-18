@@ -42,9 +42,18 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
 
-      - name: Deploy to EC2
-        run: |
-          cd /home/ubuntu/ERIC-Robotics-PSIPL
-          git pull
-          pip install -r requirements.txt
-          python3 app.py
+      - name: Docker Pull Image 
+        uses: appleboy/ssh-action@master
+        with:
+          host: 13.201.22.253
+          username: ubuntu
+          key: ${{ secrets.AWS_EC2_SSH_KEY }}
+          script_stop: true
+          port: 22
+          script: |
+            whoami
+            cd /home/ubuntu/ERIC-Robotics-PSIPL
+            pwd
+            git checkout .
+            git checkout main
+            git pull origin main
