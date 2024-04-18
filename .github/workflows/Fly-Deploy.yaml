@@ -25,19 +25,6 @@ jobs:
       - name: Run tests
         run: python unit_tests.py
 
-  deploy:
-    name: Deploy app
-    runs-on: ubuntu-latest
-    concurrency: deploy-group    # optional: ensure only one action runs at a time
-    needs: test
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Configure SSH Key
-        run: echo "${{ secrets.AWS_EC2_SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-
       - name: Deploy to EC2
         run: |
           ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.AWS_HOST_IP }} "\
@@ -45,5 +32,5 @@ jobs:
             git pull origin main && \
             pip install -r requirements.txt && \
             python app.py"
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_KEY }}
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_KEY }}
