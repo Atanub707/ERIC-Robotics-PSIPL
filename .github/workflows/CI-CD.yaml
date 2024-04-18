@@ -1,4 +1,4 @@
-name: Fly Deploy
+name: Test Build & Deploy
 
 on:
   push:
@@ -25,12 +25,26 @@ jobs:
       - name: Run tests
         run: python unit_tests.py
 
+  push_to_dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build the Docker image
+        run: docker build -t atanubiswas/eric-robotics-psipl:latest .
+
+      - name: Push the Docker image
+        run: docker push atanubiswas/eric-robotics-psipl:latest
+
   deploy:
     name: Deploy app
     runs-on: self-hosted
     concurrency: deploy-group    # optional: ensure only one action runs at a time
     needs: test
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,8 +55,7 @@ jobs:
           echo "${{ secrets.AWS_EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-
-      - name: Docker Pull Image 
+      - name: Docker Pull & Run Image 
         uses: appleboy/ssh-action@master
         with:
           host: 13.201.22.253
@@ -54,6 +67,7 @@ jobs:
             whoami
             cd /home/ubuntu/ERIC-Robotics-PSIPL
             pwd
-            git checkout .
-            git checkout main
-            git pull origin main
+            docker stop eric-robotics-psipl || true
+            docker rm eric-robotics-psipl || true
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
+            docker run -d --name eric-robotics-psipl -p 5000:5000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
