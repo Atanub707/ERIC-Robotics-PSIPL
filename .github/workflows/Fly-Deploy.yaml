@@ -44,6 +44,6 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@${{ secrets.AWS_HOST_IP }} "cd ERIC-Robotics-PSIPL && git pull origin main && pip install -r requirements.txt && python app.py"
+          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@13.127.137.27 "cd ERIC-Robotics-PSIPL && git pull origin main && pip install -r requirements.txt && python app.py"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_KEY }}
