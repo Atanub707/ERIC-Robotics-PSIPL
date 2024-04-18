@@ -11,7 +11,7 @@ class TestApp(unittest.TestCase):
     def test_home(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Welcome to my basic web application 12345!', response.data)
+        self.assertIn(b'Welcome to my basic web application 1234!', response.data)
 
     def test_about(self):
         response = self.app.get('/about')
