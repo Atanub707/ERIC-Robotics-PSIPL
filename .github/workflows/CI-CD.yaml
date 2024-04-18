@@ -68,6 +68,6 @@ jobs:
             cd /home/ubuntu/ERIC-Robotics-PSIPL
             pwd
             docker stop eric-robotics-psipl || true
-            docker rm eric-robotics-psipl || true
+            docker rmi eric-robotics-psipl || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
-            docker run -d --name eric-robotics-psipl -p 5000:5000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
+            docker run -d --name eric-robotics-psipl -p 6000:6000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
