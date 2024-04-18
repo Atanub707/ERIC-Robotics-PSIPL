@@ -61,7 +61,7 @@ jobs:
             whoami
             cd /home/ubuntu/ERIC-Robotics-PSIPL
             pwd
-            docker stop eric-robotics-psipl || true
-            docker rmi eric-robotics-psipl || true
+            docker stop atanubiswas/eric-robotics-psipl || true
+            docker rmi atanubiswas/eric-robotics-psipl || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
             docker run -d --name eric-robotics-psipl -p 6000:6000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
