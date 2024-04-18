@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.AWS_HOST_IP }} "\
-            cd /path/to/your/app && \
+            cd ERIC-Robotics-PSIPL && \
             git pull origin main && \
             pip install -r requirements.txt && \
             python app.py"
