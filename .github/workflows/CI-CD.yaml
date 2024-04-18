@@ -36,7 +36,7 @@ jobs:
         with:
           contex: .
           push: true
-          tags: atanubiswas/webapp:${{ github.sha }}
+          tags: atanubiswas/webapp:v1
 
   deploy:
     name: Deploy to EC2
@@ -56,7 +56,7 @@ jobs:
           script: |
             docker stop webapp || true
             docker rm webapp || true
-            docker pull ${{ secrets.DOCKERHUB.USERNAME }}/webapp:${{ github.sha }}
-            docker run -d --name webapp -p 5000:5000 ${{ secrets.DOCKERHUB.USERNAME }}/webapp:${{ github.sha }}
+            docker pull ${{ secrets.DOCKERHUB.USERNAME }}/webapp:v1
+            docker run -d --name webapp -p 5000:5000 ${{ secrets.DOCKERHUB.USERNAME }}/webapp:v1
 
      
