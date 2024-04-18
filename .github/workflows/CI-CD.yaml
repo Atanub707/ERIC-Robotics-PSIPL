@@ -61,6 +61,6 @@ jobs:
             whoami
             cd /home/ubuntu/ERIC-Robotics-PSIPL
             pwd
-            docker system prune -y
+            docker system prune --force
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
             docker run -d --name eric-robotics-psipl -p 6000:6000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
