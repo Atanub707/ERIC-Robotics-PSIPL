@@ -63,5 +63,6 @@ jobs:
             pwd
             docker stop atanubiswas/eric-robotics-psipl || true
             docker rmi atanubiswas/eric-robotics-psipl || true
+            docker system prune
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
             docker run -d --name eric-robotics-psipl -p 6000:6000 ${{ secrets.DOCKERHUB_USERNAME }}/eric-robotics-psipl:latest
