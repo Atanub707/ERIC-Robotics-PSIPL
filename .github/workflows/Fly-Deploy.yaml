@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          cd /path/to/your/app
+          cd ERIC-Robotics-PSIPL
           git pull origin main
           pip install -r requirements.txt
           python app.py
